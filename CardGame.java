@@ -1,9 +1,10 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class CardGame {
-    static int numPlayers;
+    static int numPlayers = 3;
     static String packFileName;
 
     // Method for retrieving the number of players in this game.
@@ -28,33 +29,41 @@ public class CardGame {
     // Method for retrieving the name of the pack text file to be used in this game.
     static String inputPackFileName () 
     {
-        boolean isValidPack = false;
+        boolean isValidPack;
         Scanner scan = new Scanner(System.in);
         // Keep asking for the file name until the pack has been identifed as valid.
         do {
+            isValidPack = true;
             System.out.print("Please enter the pack file name: ");
-            while (!scan.hasNext()) {
-                System.out.print("Please enter the pack file name: (fileName.txt) ");
-                scan.next();
-            }
             packFileName = scan.next();
             try {
                 File packFile = new File(packFileName);
                 Scanner reader = new Scanner(packFile);
-                isValidPack = true;
+                int[] cards = {};  
                 while (reader.hasNextLine()) {
                     String cardNumber = reader.nextLine();
-                    if (Integer.parseInt(cardNumber) < 1) {
+                    cards = Arrays.copyOf(cards, cards.length + 1);
+                    try {
+                        cards[cards.length - 1] = Integer.parseInt(cardNumber);
+                        if (Integer.parseInt(cardNumber) < 1) {
+                            isValidPack = false;
+                            throw new NumberFormatException();
+                        }
+                    } catch (NumberFormatException e) {
                         isValidPack = false;
+                        System.out.println("Invalid pack contents, please make sure the numbers are positive integers.");
+                        break;
                     }
                 }
-                if (!isValidPack)
-                    System.out.print("Invalid pack contents, please make sure there are 8n positive integers on each line.\n");
+                if (cards.length != numPlayers * 8) {
+                    isValidPack = false;
+                    System.out.println("Invalid pack length, please make sure there are 8n positive integers on each line.");
+                }
                 reader.close();
-              } catch (FileNotFoundException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-              }
+            } catch (FileNotFoundException e) {
+                isValidPack = false;
+                System.out.println("Cannot find file, please type the file name as fileName.txt");
+            }
         }
         while (!isValidPack);
         // A valid pack will close the scanner and return the value to the main method.
@@ -64,7 +73,6 @@ public class CardGame {
 
     public static void main(String[] args) {
         //numPlayers = inputNumPlayers();
-        //System.out.println("The number entered by user: " + numPlayers);
         packFileName = inputPackFileName();
     }
 }
