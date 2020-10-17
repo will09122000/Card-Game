@@ -78,6 +78,7 @@ public class CardGame {
     }  
 
     public static void main(String[] args) {
+        // Ask user for number of players playing and the pack text file that is intended to be used.
         numPlayers = inputNumPlayers();
         packFileName = inputPackFileName();
     }
