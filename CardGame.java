@@ -22,7 +22,6 @@ public class CardGame {
         }
         while (numPlayers < 2);
         // A successful input will close the scanner and return the value to the main method.
-        //scan.close();
         return numPlayers;
     } 
 
