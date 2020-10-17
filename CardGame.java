@@ -40,30 +40,30 @@ public class CardGame {
                 Scanner reader = new Scanner(packFile);
                 int[] cards = {};  
                 while (reader.hasNextLine()) {
-                // Read the next line and increase the size of the numbers array.
-                String cardNumber = reader.nextLine();
-                cards = Arrays.copyOf(cards, cards.length + 1);
-                // Try converting the line to an integer an add it to the end of the array.
-                try {
-                    cards[cards.length - 1] = Integer.parseInt(cardNumber);
-                    // If the number is less than 1 it is an invalid pack.
-                    if (Integer.parseInt(cardNumber) < 1) {
+                    // Read the next line and increase the size of the numbers array.
+                    String cardNumber = reader.nextLine();
+                    cards = Arrays.copyOf(cards, cards.length + 1);
+                    // Try converting the line to an integer an add it to the end of the array.
+                    try {
+                        cards[cards.length - 1] = Integer.parseInt(cardNumber);
+                        // If the number is less than 1 it is an invalid pack.
+                        if (Integer.parseInt(cardNumber) < 1) {
+                            isValidPack = false;
+                            throw new NumberFormatException();
+                        }
+                    // If it's not a number the pack is invalid.
+                    } catch (NumberFormatException e) {
                         isValidPack = false;
-                        throw new NumberFormatException();
+                        System.out.println("Invalid pack contents, please make sure the numbers are positive integers.");
+                        break;
                     }
-                // If it's not a number the pack is invalid.
-                } catch (NumberFormatException e) {
-                    isValidPack = false;
-                    System.out.println("Invalid pack contents, please make sure the numbers are positive integers.");
-                    break;
                 }
-            }
-            // If the pack doesn't have 8n numbers the pack is invalid.
-            if (cards.length != numPlayers * 8) {
-                isValidPack = false;
-                System.out.println("Invalid pack length, please make sure there are 8n positive integers on each line.");
-            }
-            reader.close();
+                // If the pack doesn't have 8n numbers the pack is invalid.
+                if (cards.length != numPlayers * 8) {
+                    isValidPack = false;
+                    System.out.println("Invalid pack length, please make sure there are 8n positive integers on each line.");
+                }
+                reader.close();
             // The user is asked for the file name again if it is not found, this occurs if the pack is found to be invalid as well.
             } catch (FileNotFoundException e) {
                 isValidPack = false;
