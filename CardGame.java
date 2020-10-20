@@ -26,7 +26,7 @@ public class CardGame {
     } 
 
     // Method for retrieving the name of the pack text file to be used in this game.
-    static String inputPackFileName () 
+    static String inputPackFileName ()
     {
         boolean isValidPack;
         Scanner scan = new Scanner(System.in);
