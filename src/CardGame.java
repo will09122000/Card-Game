@@ -6,11 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.*; 
 import java.util.*; 
 
-public class CardGame {
-    static int numPlayers = 3;
-    static String packFileName = "three.txt";
+public class CardGame extends Thread {
+    static int numPlayers;
+    static String packFileName;
     static CardPile entirePack;
-    static ArrayList<Player> players = new ArrayList<Player>(); 
+    static ArrayList<Player> playersArray = new ArrayList<Player>(); 
     static Deck[] decks;
 
     // Method for retrieving the number of players in this game.
@@ -85,7 +85,7 @@ public class CardGame {
     // Method for creating an array of Card objects from all the cards in the text file. 
     static CardPile fileToPile (String packFileName)
     {
-        CardPile entirePack = new CardPile(numPlayers*8);
+        CardPile entirePack = new CardPile();
         File packFile = new File(packFileName);
         Scanner reader;
         try {
@@ -103,23 +103,49 @@ public class CardGame {
 
     static ArrayList<Player> generatePlayers (int numPlayers, CardPile entirePack) 
     {
+        int cardDiff = numPlayers - 1;
         for (int i = 0; i < numPlayers; i++) {
-            CardPile playerHand = new CardPile(5);
-            for (int j = 0; j < numPlayers*4; j+=numPlayers) {
+            CardPile playerHand = new CardPile();
+            int temp = 0;
+            int j = 0;
+            while (temp < 4) {
                 Card card = entirePack.getCard(j);
                 playerHand.addCard(card);
+                temp ++;
+                j += cardDiff;
             }
             Player newPlayer = new Player(i+1, playerHand);
-            players.add(newPlayer);
+            playersArray.add(newPlayer);
+            cardDiff -= 1;
+            temp = 0;
+
         }
-        return players;
+        return playersArray;
+    }
+
+    public CardGame (String s) { 
+        super(s); 
     }
 
     public static void main(String[] args) {
         // Ask user for number of players playing and the pack text file that is intended to be used.
-        //numPlayers = inputNumPlayers();
-        //packFileName = inputPackFileName();
+        numPlayers = inputNumPlayers();
+        packFileName = inputPackFileName();
         entirePack = fileToPile(packFileName);
-        players = generatePlayers(numPlayers, entirePack);
+        System.out.println("Pack Loaded Successfully");
+        entirePack.displayCards();
+        playersArray = generatePlayers(numPlayers, entirePack);
+        entirePack.displayCards();
+
+        for (int i=0; i<numPlayers; i++) {
+            //CardGame temp = new CardGame("Player" + i);
+            Player newPlayer = ((Player) playersArray.get(i));
+            //temp.start();
+
+            System.out.println("Started Thread:" + (i+1));
+            System.out.println("Player " + (i+1) + " initial hand: ");
+            newPlayer.getPlayerHand().displayCards();
+            
+        }
     }
 }

@@ -12,6 +12,10 @@ public class Player {
         return playerID;
     }
 
+    public CardPile getPlayerHand() {
+        return playerHand;
+    }
+
     // Constructor
     public Player(int playerID, CardPile playerHand) {
         this.playerID = playerID;

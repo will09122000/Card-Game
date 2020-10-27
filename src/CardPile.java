@@ -1,36 +1,35 @@
+//import java.util.Arrays;
+import java.util.*; 
+
 public class CardPile {
-    private Card[] pile;
+    //private Card[] pile;
+    ArrayList<Card> pile = new ArrayList<Card>();
     
     // Getters
-    public Card[] getPile() {
+    public ArrayList<Card> getPile() {
         return pile;
     }
 
     public void addCard(Card card) {
         // Iterate through deck of cards until there is an empty space (null) and fill it.
-        for (int i = 0; i < pile.length; i++) {
-            if (pile[i] == null) {
-                pile[i] = card;
-                break;
-            }
-          }
+        pile.add(card);
     }
 
     public void removeCard(Card card) {
         // Iterate through pack of cards until the card is found and remove it from the array.
-        for (int i = 0; i < pile.length; i++) {
-            if (pile[i] == card) {
-                pile[i] = null;
+        for (int i = 0; i < pile.size(); i++) {
+            if (pile.get(i) == card) {
+                pile.add(null);
                 break;
             }
           }
     }
 
     public Card getNextCard() {
-        for (int i = 0; i < pile.length; i++) {
-            if (pile[i] != null) {
-                Card nextCard = pile[i];
-                pile[i] = null;
+        for (int i = 0; i < pile.size(); i++) {
+            if (pile.get(i) != null) {
+                Card nextCard = pile.get(i);
+                pile.add(null);
                 return nextCard;
             }
         }
@@ -38,21 +37,21 @@ public class CardPile {
     }
 
     public Card getCard(int position) {
-        return pile[position];
+        Card nextCard = ((Card) pile.get(position));
+        pile.remove(position);
+        return nextCard;
     }
 
     public void displayCards() {
-        for (int i = 0; i<pile.length; i++) {
-            System.out.println(pile[i]);
+        for (int i = 0; i<pile.size(); i++) {
+            if (pile.get(i) != null) {
+                System.out.println(pile.get(i).getNumber());
+            }
         }
     }
 
-    public void pileHeight() {
-        System.out.println(pile.length);
-    }
-
     // Constructor
-    public CardPile(int pileHeight) {
-        this.pile = new Card[pileHeight];
+    public CardPile() {
+        this.pile = new ArrayList<Card>();
     }
 }
