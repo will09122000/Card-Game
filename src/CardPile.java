@@ -1,8 +1,6 @@
-//import java.util.Arrays;
-import java.util.*; 
+import java.util.ArrayList; 
 
 public class CardPile {
-    //private Card[] pile;
     ArrayList<Card> pile = new ArrayList<Card>();
     
     // Getters
@@ -10,33 +8,18 @@ public class CardPile {
         return pile;
     }
 
+    // Adds the card object to the pile ArrayList.
     public void addCard(Card card) {
-        // Iterate through deck of cards until there is an empty space (null) and fill it.
         pile.add(card);
     }
 
     public void removeCard(Card card) {
-        // Iterate through pack of cards until the card is found and remove it from the array.
-        for (int i = 0; i < pile.size(); i++) {
-            if (pile.get(i) == card) {
-                pile.add(null);
-                break;
-            }
-          }
-    }
-
-    public Card getNextCard() {
-        for (int i = 0; i < pile.size(); i++) {
-            if (pile.get(i) != null) {
-                Card nextCard = pile.get(i);
-                pile.add(null);
-                return nextCard;
-            }
-        }
-        return null;
+        // Removes the card object from the pile ArrayList.
+        pile.remove(card);
     }
 
     public Card getCard(int position) {
+        // Returns the card object from pile at the index given and removes that card object from the pile ArrayList.
         Card nextCard = ((Card) pile.get(position));
         pile.remove(position);
         return nextCard;

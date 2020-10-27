@@ -1,10 +1,8 @@
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.*; 
-import java.util.*; 
+import java.util.ArrayList; 
 
 public class CardGame extends Thread {
     static int numPlayers;
@@ -101,6 +99,7 @@ public class CardGame extends Thread {
         return entirePack;
     }
 
+    // Method for distributing the cards to each players in a round-robin fashion.
     static ArrayList<Player> generatePlayers (int numPlayers, CardPile entirePack) 
     {
         int cardDiff = numPlayers - 1;
@@ -131,17 +130,18 @@ public class CardGame extends Thread {
         // Ask user for number of players playing and the pack text file that is intended to be used.
         numPlayers = inputNumPlayers();
         packFileName = inputPackFileName();
+        // Reads the card file again and loads it into a CardPile object.
         entirePack = fileToPile(packFileName);
         System.out.println("Pack Loaded Successfully");
-        entirePack.displayCards();
+        //entirePack.displayCards();
+        // Distributes first half of the card pile to the players.
         playersArray = generatePlayers(numPlayers, entirePack);
-        entirePack.displayCards();
+        //entirePack.displayCards();
 
         for (int i=0; i<numPlayers; i++) {
-            //CardGame temp = new CardGame("Player" + i);
+            CardGame temp = new CardGame("Player" + i);
             Player newPlayer = ((Player) playersArray.get(i));
-            //temp.start();
-
+            temp.start();
             System.out.println("Started Thread:" + (i+1));
             System.out.println("Player " + (i+1) + " initial hand: ");
             newPlayer.getPlayerHand().displayCards();
