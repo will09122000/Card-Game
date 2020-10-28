@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList; 
 
-public class CardGame extends Thread {
-    static int numPlayers;
-    static String packFileName;
-    static CardPile entirePack;
-    static ArrayList<Player> playersArray = new ArrayList<Player>(); 
-    static Deck[] decks;
+public class CardGame {
+    static int numPlayers = 3;
+    static String packFileName = "three.txt";
+    static CardDeck entirePack;
+    static ArrayList<CardDeck> playersArray = new ArrayList<CardDeck>();
+    static ArrayList<CardDeck> decksArray = new ArrayList<CardDeck>(); 
 
     // Method for retrieving the number of players in this game.
     static int inputNumPlayers () 
@@ -81,9 +81,9 @@ public class CardGame extends Thread {
     }
 
     // Method for creating an array of Card objects from all the cards in the text file. 
-    static CardPile fileToPile (String packFileName)
+    static CardDeck fileToPile (String packFileName)
     {
-        CardPile entirePack = new CardPile();
+        CardDeck entirePack = new CardDeck();
         File packFile = new File(packFileName);
         Scanner reader;
         try {
@@ -99,53 +99,70 @@ public class CardGame extends Thread {
         return entirePack;
     }
 
-    // Method for distributing the cards to each players in a round-robin fashion.
-    static ArrayList<Player> generatePlayers (int numPlayers, CardPile entirePack) 
+    /*
+    // Method for distributing the cards to each player in a round-robin fashion.
+    static ArrayList<CardDeck> generatePlayers (int numPlayers, CardDeck entirePack) 
     {
         int cardDiff = numPlayers - 1;
         for (int i = 0; i < numPlayers; i++) {
-            CardPile playerHand = new CardPile();
-            int temp = 0;
-            int j = 0;
-            while (temp < 4) {
-                Card card = entirePack.getCard(j);
+            CardDeck playerHand = new CardDeck();
+            int cardNumber = 0;
+            int counter = 0;
+            while (cardNumber < 4) {
+                Card card = entirePack.getCard(counter);
                 playerHand.addCard(card);
-                temp ++;
-                j += cardDiff;
+                cardNumber ++;
+                counter += cardDiff;
             }
             Player newPlayer = new Player(i+1, playerHand);
             playersArray.add(newPlayer);
             cardDiff -= 1;
-            temp = 0;
-
+            cardNumber = 0;
         }
         return playersArray;
     }
+    */
 
-    public CardGame (String s) { 
-        super(s); 
+    // Method for distrbuting the second half of the cards to the decks that players draw from.
+    static ArrayList<CardDeck> generateDecks (int numPlayers, CardDeck entirePack)
+    {
+        int cardDiff = numPlayers - 1;
+        for (int i = 0; i < numPlayers; i++) {
+            CardDeck deck = new CardDeck();
+            int cardNumber = 0;
+            int counter = 0;
+            while (cardNumber < 4) {
+                Card card = entirePack.getCard(counter);
+                deck.addCard(card);
+                cardNumber ++;
+                counter += cardDiff;
+            }
+            decksArray.add(deck);
+            cardDiff -= 1;
+            cardNumber = 0;
+        }
+        return decksArray;
     }
 
     public static void main(String[] args) {
         // Ask user for number of players playing and the pack text file that is intended to be used.
-        numPlayers = inputNumPlayers();
-        packFileName = inputPackFileName();
+        //numPlayers = inputNumPlayers();
+        //packFileName = inputPackFileName();
+        
         // Reads the card file again and loads it into a CardPile object.
         entirePack = fileToPile(packFileName);
         System.out.println("Pack Loaded Successfully");
-        //entirePack.displayCards();
+
         // Distributes first half of the card pile to the players.
-        playersArray = generatePlayers(numPlayers, entirePack);
-        //entirePack.displayCards();
+        playersArray = generateDecks(numPlayers, entirePack);
+
+        // Distributes the second half of the card pile to the decks.
+        decksArray = generateDecks(numPlayers, entirePack);
 
         for (int i=0; i<numPlayers; i++) {
-            CardGame temp = new CardGame("Player" + i);
-            Player newPlayer = ((Player) playersArray.get(i));
-            temp.start();
-            System.out.println("Started Thread:" + (i+1));
-            System.out.println("Player " + (i+1) + " initial hand: ");
-            newPlayer.getPlayerHand().displayCards();
-            
+            Runnable newPlayer = new Player(i+1, playersArray.get(i));
+            Thread thread = new Thread(newPlayer, "player" + (i+1));
+            thread.start();
         }
     }
 }
