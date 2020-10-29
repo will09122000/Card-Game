@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+
 public class Player implements Runnable
 {
     private int playerID;
     private CardDeck playerHand;
+    private ArrayList<CardDeck> decksArray;
     private boolean stop = false;
 
     // Setters
@@ -19,9 +22,10 @@ public class Player implements Runnable
     }
 
     // Constructor
-    public Player(int playerID, CardDeck playerHand) {
+    public Player(int playerID, CardDeck playerHand, ArrayList<CardDeck> decksArray) {
         this.playerID = playerID;
         this.playerHand = playerHand;
+        this.decksArray = decksArray;
     }
 
     public synchronized void stop() {

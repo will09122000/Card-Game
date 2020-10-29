@@ -160,7 +160,7 @@ public class CardGame {
         decksArray = generateDecks(numPlayers, entirePack);
 
         for (int i=0; i<numPlayers; i++) {
-            Runnable newPlayer = new Player(i+1, playersArray.get(i));
+            Runnable newPlayer = new Player(i+1, playersArray.get(i), decksArray);
             Thread thread = new Thread(newPlayer, "player" + (i+1));
             thread.start();
         }
