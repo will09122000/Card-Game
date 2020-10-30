@@ -30,8 +30,12 @@ public class CardDeck {
         return card;
     }
 
-    public String displayCards() {
-        return Integer.toString(deck.get(0).getNumber()) + Integer.toString(deck.get(1).getNumber()) + Integer.toString(deck.get(2).getNumber()) + Integer.toString(deck.get(3).getNumber());
+    public StringBuffer displayCards() {
+        StringBuffer sb = new StringBuffer();
+        for (Card card : deck) {
+            sb.append(card.getNumber());
+         }
+        return sb;
     }
 
     // Constructor
