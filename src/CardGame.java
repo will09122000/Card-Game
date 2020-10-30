@@ -112,7 +112,7 @@ public class CardGame {
     // Method for distrbuting the second half of the cards to the decks that players
     // draw from.
     public static ArrayList<CardDeck> generateDecks(int numPlayers, CardDeck entirePack) {
-        System.out.println("In " + entirePack.displayCards());
+        ArrayList<CardDeck> newDecks = new ArrayList<CardDeck>();
         int cardDiff = numPlayers - 1;
         for (int i = 0; i < numPlayers; i++) {
             CardDeck deck = new CardDeck();
@@ -124,12 +124,11 @@ public class CardGame {
                 cardNumber++;
                 counter += cardDiff;
             }
-            decksArray.add(deck);
+            newDecks.add(deck);
             cardDiff -= 1;
             cardNumber = 0;
         }
-        System.out.println("Out " + entirePack.displayCards());
-        return decksArray;
+        return newDecks;
     }
 
     /*
@@ -154,7 +153,6 @@ public class CardGame {
 
         // Distributes first half of the card pile to the players.
         playersArray = generateDecks(numPlayers, entirePack);
-
 
         // Distributes the second half of the card pile to the decks.
         decksArray = generateDecks(numPlayers, entirePack);

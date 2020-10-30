@@ -55,16 +55,16 @@ public class Player implements Runnable
         CardDeck currentDeck = this.getPlayerHand();
         CardDeck drawCardDeck = decksArray.get(this.getPlayerID()-1);
 
-        System.out.println(this.getPlayerID() + " Draw Deck: " + drawCardDeck.displayCards());
+        //System.out.println(this.getPlayerID() + " Draw Deck: " + drawCardDeck.displayCards());
 
         Card newCard = drawCardDeck.getCard(0);
 
-        System.out.println(this.getPlayerID() + " Card Drawn: " + newCard.getNumber());
+        //System.out.println(this.getPlayerID() + " Card Drawn: " + newCard.getNumber());
 
         currentDeck.addCard(newCard);
         this.setPlayerHand(currentDeck);
         
-        System.out.println(this.getPlayerID() + " Player Deck: " + this.getPlayerHand().displayCards());
+        //System.out.println(this.getPlayerID() + " Player Deck: " + this.getPlayerHand().displayCards());
     }
 
     private synchronized void discardCard() {
@@ -90,11 +90,12 @@ public class Player implements Runnable
 
     public void run()
     {
-        System.out.println(this.getPlayerID() + " " + this.getPlayerHand().displayCards());
         while(running()) {
             //System.out.println(Thread.currentThread().getName() + ": " + this.getPlayerHand().displayCards());
+            System.out.println(this.getPlayerID() + " " + this.getPlayerHand().displayCards());
+            System.out.println(decksArray.get(0).displayCards() + " " + decksArray.get(1).displayCards() + " " + decksArray.get(2).displayCards());
             this.drawCard();
-            //this.discardCard();
+            this.discardCard();
             if (isWinningHand()) {
                 stop();
             } else {
