@@ -33,7 +33,7 @@ public class CardDeck {
     public StringBuffer displayCards() {
         StringBuffer sb = new StringBuffer();
         for (Card card : deck) {
-            sb.append(card.getNumber());
+            sb.append(card.getNumber() + " ");
          }
         return sb;
     }

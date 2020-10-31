@@ -98,19 +98,9 @@ public class CardGame {
         return entirePack;
     }
 
-    /*
-     * // Method for distributing the cards to each player in a round-robin fashion.
-     * static ArrayList<CardDeck> generatePlayers (int numPlayers, CardDeck
-     * entirePack) { int cardDiff = numPlayers - 1; for (int i = 0; i < numPlayers;
-     * i++) { CardDeck playerHand = new CardDeck(); int cardNumber = 0; int counter
-     * = 0; while (cardNumber < 4) { Card card = entirePack.getCard(counter);
-     * playerHand.addCard(card); cardNumber ++; counter += cardDiff; } Player
-     * newPlayer = new Player(i+1, playerHand); playersArray.add(newPlayer);
-     * cardDiff -= 1; cardNumber = 0; } return playersArray; }
-     */
 
-    // Method for distrbuting the second half of the cards to the decks that players
-    // draw from.
+    // Method for distrbuting the each half of the cards to the players and the decks that players
+    // draw from repectively.
     public static ArrayList<CardDeck> generateDecks(int numPlayers, CardDeck entirePack) {
         ArrayList<CardDeck> newDecks = new ArrayList<CardDeck>();
         int cardDiff = numPlayers - 1;
@@ -131,16 +121,20 @@ public class CardGame {
         return newDecks;
     }
 
-    /*
-    public static CardDeck removeFirstHalf(int numPlayers, CardDeck entirePack) {
-        for (int i = 0; i < numPlayers * 4; i++) {
-            entirePack.removeCard(entirePack.getCard(i));
+    // Method for deleting all the output text files that were generated in the last running of the program.
+    public static void deleteTextFiles() {
+        File mainFolder = new File(System.getProperty("user.dir"));
+        File files[] = mainFolder.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            File pes = files[i];
+            if (pes.getName().contains("_output.txt")) {
+                files[i].delete();
+            }
         }
-        return entirePack;
     }
-    */
 
     public static void main(String[] args) {
+        deleteTextFiles();
         // Ask user for number of players playing and the pack text file that is
         // intended to be used.
         // numPlayers = inputNumPlayers();
@@ -157,9 +151,7 @@ public class CardGame {
         // Distributes the second half of the card pile to the decks.
         decksArray = generateDecks(numPlayers, entirePack);
         
-        System.out.println(playersArray.get(0).displayCards() + " " + playersArray.get(1).displayCards() + " " + playersArray.get(2).displayCards());
-        System.out.println(decksArray.get(0).displayCards() + " " + decksArray.get(1).displayCards() + " " + decksArray.get(2).displayCards());
-        
+        // Create and start a thread for each player.
         for (int i=0; i<numPlayers; i++) {
             Runnable newPlayer = new Player(i+1, playersArray.get(i), decksArray);
             Thread thread = new Thread(newPlayer, "player" + (i+1));
