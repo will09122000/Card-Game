@@ -165,12 +165,9 @@ public class Player implements Runnable
     public void run()
     {
         writeInitialHand();
-        while(running()) {
-            //System.out.println(Thread.currentThread().getName() + ": " + this.getPlayerHand().displayCards());
-            System.out.println("Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards());
-            //System.out.println(decksArray.get(0).displayCards() + " " + decksArray.get(1).displayCards() + " " + decksArray.get(2).displayCards());
+        while(!stop) {
+            //System.out.println("Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards());
             if (isWinningHand()) {
-                System.out.println("Player " + this.getPlayerID() + " has won");
                 winner.add(this.getPlayerID());
                 stopGame();
             } else {
@@ -184,7 +181,7 @@ public class Player implements Runnable
                 }
             }
         }
-        System.out.println(winner);
         writeEndHand();
+        System.out.println("Player " + winner.get(0) + " has won");
     }
 }

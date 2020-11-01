@@ -10,6 +10,7 @@ public class CardGame {
     static CardDeck entirePack = new CardDeck();
     static ArrayList<CardDeck> playersArray = new ArrayList<CardDeck>();
     static ArrayList<CardDeck> decksArray = new ArrayList<CardDeck>();
+    static ArrayList<Thread> arrThreads = new ArrayList<Thread>();
 
     // Method for retrieving the number of players in this game.
     static int inputNumPlayers() {
@@ -38,7 +39,9 @@ public class CardGame {
             System.out.print("Please enter the pack file name: ");
             packFileName = scan.nextLine();
             try {
-                File packFile = new File(packFileName);
+                File currentDir = new File(".");
+                File parentDir = currentDir.getParentFile();
+                File packFile = new File(parentDir, packFileName);
                 Scanner reader = new Scanner(packFile);
                 int[] cards = {};
                 while (reader.hasNextLine()) {
@@ -83,7 +86,9 @@ public class CardGame {
     // Method for creating an array of Card objects from all the cards in the text
     // file.
     static CardDeck fileToPile(String packFileName) {
-        File packFile = new File(packFileName);
+        File currentDir = new File(".");
+        File parentDir = currentDir.getParentFile();
+        File packFile = new File(parentDir, packFileName);
         try {
             Scanner reader = new Scanner(packFile);
             while (reader.hasNextLine()) {
@@ -133,12 +138,12 @@ public class CardGame {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         deleteTextFiles();
         // Ask user for number of players playing and the pack text file that is
         // intended to be used.
-        // numPlayers = inputNumPlayers();
-        // packFileName = inputPackFileName();
+        //numPlayers = inputNumPlayers();
+        //packFileName = inputPackFileName();
 
         // Reads the card file again and loads it into a CardPile object.
         entirePack = fileToPile(packFileName);
@@ -156,6 +161,12 @@ public class CardGame {
             Runnable newPlayer = new Player(i+1, playersArray.get(i), decksArray);
             Thread thread = new Thread(newPlayer, "player" + (i+1));
             thread.start();
+            arrThreads.add(thread);
         }
+        for (int i = 0; i < arrThreads.size(); i++) 
+        {
+            arrThreads.get(i).join(); 
+        }
+        System.out.println("yeet");
     }
 }
