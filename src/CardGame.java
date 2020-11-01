@@ -84,14 +84,14 @@ public class CardGame {
     // file.
     static CardDeck fileToPile(String packFileName) {
         File packFile = new File(packFileName);
-        Scanner reader;
         try {
-            reader = new Scanner(packFile);
+            Scanner reader = new Scanner(packFile);
             while (reader.hasNextLine()) {
                 int cardNumber = Integer.parseInt(reader.nextLine());
                 Card newCard = new Card(cardNumber);
                 entirePack.addCard(newCard);
             }
+            reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

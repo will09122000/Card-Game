@@ -141,6 +141,27 @@ public class Player implements Runnable
         }
     }
 
+     // Writes the last lines of each player's file when a player wins.
+     private synchronized void writeEndHand() {
+        try {
+            FileWriter writeFile = new FileWriter(outputFile.getName(), true);
+            BufferedWriter buffer = new BufferedWriter(writeFile);
+            PrintWriter print = new PrintWriter(buffer);
+            if (winner.get(0) == this.getPlayerID()) {
+                print.println("player " + this.getPlayerID() + " wins");
+                print.println("player " + this.getPlayerID() + " exits");
+                print.println("player " + this.getPlayerID() + " final hand: " + this.getPlayerHand().displayCards());
+            } else {
+                print.println("player " + winner.get(0) + " has informed player " + this.getPlayerID() + " that player " + winner.get(0) + " has won");
+                print.println("player " + this.getPlayerID() + " exits");
+                print.println("player " + this.getPlayerID() + " hand: " + this.getPlayerHand().displayCards());
+            }
+            print.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void run()
     {
         writeInitialHand();
@@ -164,5 +185,6 @@ public class Player implements Runnable
             }
         }
         System.out.println(winner);
+        writeEndHand();
     }
 }
