@@ -1,3 +1,5 @@
+package main;
+
 import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
@@ -8,7 +10,8 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
 
-public class CardGame extends Player{
+public class CardGame extends Player {
+
     public CardGame(int playerID, CardDeck playerHand, ArrayList<CardDeck> decksArray) {
         super(playerID, playerHand, decksArray);
     }

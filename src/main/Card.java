@@ -1,3 +1,5 @@
+package main;
+
 public class Card {
     private int number;
 

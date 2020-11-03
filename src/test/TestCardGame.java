@@ -1,25 +1,28 @@
+package test;
+
 import org.junit.BeforeClass;
 import org.junit.Before;
 import org.junit.Test;
 
 import jdk.jfr.Timestamp;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import main.CardGame;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 
-public class TestCard {
-    private Card card;
+public class TestCardGame {
+    private CardGame cardGame;
 
     @Before
     public final void setUp() throws Exception {
-
-        card = new Card();
-        card.setNumber(5);       
+        //cardGame = new CardGame();
+       
     }
 
     @Test
-    public final void testSetNumber() {
-        assertEquals(5, card.getNumber(), "Card number must be 5");
+    public void testInputNumPlayers () {
+        //CardGame tester = new CardGame();
+        //assertEquals();
     }
 }
