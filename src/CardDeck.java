@@ -24,12 +24,16 @@ public class CardDeck {
         deck.remove(position);
         return nextCard;
     }
-
+    
+    // Used to view a single card in a players hand or in a deck.
     public Card viewCard(int position) {
+        // Takes an int as input and gets the card at that position within the deck.
         Card card = ((Card) deck.get(position));
+        // Returns the resulting card.
         return card;
     }
 
+    // Used to display the cards that a player or deck has.
     public StringBuffer displayCards() {
         StringBuffer sb = new StringBuffer();
         for (Card card : deck) {

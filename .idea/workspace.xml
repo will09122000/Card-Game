@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c08c4edf-3830-408d-9831-5b9ab2e9c49b" name="Default Changelist" comment="" />
+    <list default="true" id="c08c4edf-3830-408d-9831-5b9ab2e9c49b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/TestCard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestCardGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/hamcrest-core-1.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/junit-4.12.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Card.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CardDeck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CardGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Deck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deck1_output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deck2_output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deck3_output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/player1_output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/player2_output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/player3_output.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Deck.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,13 +35,20 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1j8vqm4AYpTo8UI7JUaIHI2sWmX" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -33,6 +58,10 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -45,25 +74,44 @@
       <option name="presentableId" value="Default" />
       <updated>1603198726809</updated>
       <workItem from="1603198734354" duration="362000" />
+      <workItem from="1604416147056" duration="145000" />
+      <workItem from="1604416318780" duration="1087000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="304" y="168" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603198855586">
-      <screen x="0" y="25" width="1680" height="969" />
+    <state x="237" y="382" key="#Project_Structure" timestamp="1604416865985">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
+    <state x="237" y="382" key="#Project_Structure/0.0.2560.1440@0.0.2560.1440" timestamp="1604416865985" />
+    <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604416785034">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1604416785034" />
     <state x="304" y="168" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1680.969@0.25.1680.969" timestamp="1603198855586" />
-    <state x="690" y="402" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1603198793557">
-      <screen x="0" y="25" width="1680" height="969" />
+    <state x="1051" y="560" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1604416350255">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
+    <state x="1051" y="560" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1604416350255" />
     <state x="690" y="402" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.25.1680.969@0.25.1680.969" timestamp="1603198793557" />
     <state x="528" y="249" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1603198745460">
       <screen x="0" y="25" width="1680" height="969" />
     </state>
     <state x="528" y="249" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.25.1680.969@0.25.1680.969" timestamp="1603198745459" />
+    <state x="789" y="356" key="SettingsEditor" timestamp="1604416292687">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="789" y="356" key="SettingsEditor/0.0.2560.1440@0.0.2560.1440" timestamp="1604416292687" />
+    <state x="345" y="618" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1604416698605">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="345" y="618" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.2560.1440@0.0.2560.1440" timestamp="1604416698605" />
     <state x="505" y="233" key="run.anything.popup" timestamp="1603198826927">
       <screen x="0" y="25" width="1680" height="969" />
     </state>

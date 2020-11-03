@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 public class CardGame extends Player{
     public CardGame(int playerID, CardDeck playerHand, ArrayList<CardDeck> decksArray) {
         super(playerID, playerHand, decksArray);
-        // TODO Auto-generated constructor stub
     }
 
     static int numPlayers;
@@ -94,15 +93,19 @@ public class CardGame extends Player{
 
     // Method for creating an array of Card objects from all the cards in the text
     // file.
-    static CardDeck fileToPile(String packFileName) {
+    static CardDeck fileToDeck(String packFileName) {
+        // Reads the parent directory and finds the deck file.
         File currentDir = new File(".");
         File parentDir = currentDir.getParentFile();
         File packFile = new File(parentDir, packFileName);
         try {
             Scanner reader = new Scanner(packFile);
+            // Read each line of the text file
             while (reader.hasNextLine()) {
+                // Convert line to an integer and create a card object with that integer.
                 int cardNumber = Integer.parseInt(reader.nextLine());
                 Card newCard = new Card(cardNumber);
+                // Add the card object to the CardDeck object.
                 entirePack.addCard(newCard);
             }
             reader.close();
@@ -116,18 +119,23 @@ public class CardGame extends Player{
     // Method for distrbuting the each half of the cards to the players and the decks that players
     // draw from repectively.
     public static ArrayList<CardDeck> generateDecks(int numPlayers, CardDeck entirePack) {
+        // Creates an ArrayList of decks
         ArrayList<CardDeck> newDecks = new ArrayList<CardDeck>();
+        // cardDiff used to figure out which card to distrbute when doing round-robin.
         int cardDiff = numPlayers - 1;
         for (int i = 0; i < numPlayers; i++) {
             CardDeck deck = new CardDeck();
             int cardNumber = 0;
             int counter = 0;
+            // While fewer than 4 cards has been distributed.
             while (cardNumber < 4) {
+                // Get the correct card and move it to the deck.
                 Card card = entirePack.getCard(counter);
                 deck.addCard(card);
                 cardNumber++;
                 counter += cardDiff;
             }
+            // Add the deck just created to the decks array.
             newDecks.add(deck);
             cardDiff -= 1;
             cardNumber = 0;
@@ -137,8 +145,10 @@ public class CardGame extends Player{
 
     // Method for deleting all the output text files that were generated in the last running of the program.
     public static void deleteTextFiles() {
+        // Retrieve the main source folder and create an array of all files within in. 
         File mainFolder = new File(System.getProperty("user.dir"));
         File files[] = mainFolder.listFiles();
+        // If any of these files end in '_output.txt', delete it.
         for (int i = 0; i < files.length; i++) {
             File pes = files[i];
             if (pes.getName().contains("_output.txt")) {
@@ -147,12 +157,13 @@ public class CardGame extends Player{
         }
     }
 
-    // Writes the last lines of each player's file when a player wins.
+    // Writes the contents of each deck that doesn't have a player assigned to it to its own text file.
     public static void writeEndDeck(int deckID) {
         try {
             FileWriter writeFile = new FileWriter("deck" + (deckID+1) + "_output.txt", true);
             BufferedWriter buffer = new BufferedWriter(writeFile);
             PrintWriter print = new PrintWriter(buffer);
+            // Write the card numbers of the corresponding deck to the first line.
             print.println("deck" + (deckID+1) + " contents: " + decksArray.get(deckID).displayCards());
             print.close();
         } catch (IOException e) {
@@ -162,13 +173,12 @@ public class CardGame extends Player{
 
     public static void main(String[] args) throws InterruptedException {
         deleteTextFiles();
-        // Ask user for number of players playing and the pack text file that is
-        // intended to be used.
+        // Ask user for number of players playing and the pack text file that is intended to be used.
         numPlayers = inputNumPlayers();
         packFileName = inputPackFileName();
 
         // Reads the card file again and loads it into a CardPile object.
-        entirePack = fileToPile(packFileName);
+        entirePack = fileToDeck(packFileName);
 
         // Distributes first half of the card pile to the players.
         playersArray = generateDecks(numPlayers, entirePack);
@@ -190,7 +200,7 @@ public class CardGame extends Player{
             arrThreads.get(i).join(); 
         }
 
-        // Writes the contents of each deck 
+        // Writes the contents of each deck to its own text file.
         for (int i=0; i<decksArray.size(); i++) {
             writeEndDeck(i);
         }

@@ -48,27 +48,36 @@ public class Player implements Runnable
 
     // Method for checking if a player's hand is a winning hand.
     private synchronized boolean isWinningHand() {
+        // Gets the int value of the first card in the particular player's hand.
         int cardNumber = this.getPlayerHand().viewCard(0).getNumber();
+        // A for loop that iterates through the cards in a player's hand and returns false if any of the cards are not the same as the first card in that player's hand.
         for (int i = 0; i < 4; i++) {
             if (cardNumber != this.getPlayerHand().viewCard(i).getNumber()) {
                 return false;
             }
         }
+        // It otherwise returns true as all cards in the hand are the same meaning that the player ahs won the game.
         return true;
     }
 
     // Method for drawing a card from the top of the deck to the player's left.
     private synchronized void drawCard() {
+        // The current deck is the player's hand.
         CardDeck currentDeck = this.getPlayerHand();
+        // The player draws from the deck that has an id of 1 less than the players id (decks have ids starting from 0).
         CardDeck drawCardDeck = decksArray.get(this.getPlayerID()-1);
+        // The new card is the first card in the deck the player draws from.
         Card newCard = drawCardDeck.getCard(0);
+        // The new card is added to the current deck.
         currentDeck.addCard(newCard);
+        // The player's hand is set to be the current deck.
         this.setPlayerHand(currentDeck);
 
         try {
             FileWriter writeFile = new FileWriter(outputFile.getName(), true);
             BufferedWriter buffer = new BufferedWriter(writeFile);
             PrintWriter print = new PrintWriter(buffer);
+            // Prints which player drew and what card they drew to their specific player output file.
             print.println("player " + this.getPlayerID() + " draws a " + newCard.getNumber() + " from deck " + this.getPlayerID());
             print.close();
         } catch (IOException e) {
@@ -78,6 +87,7 @@ public class Player implements Runnable
 
     // Method for discading a random card that is not of the player's preference to the bottom of the deck to the player's right.
     private synchronized void discardCard() {
+        // The current deck is the player's hand.
         CardDeck currentDeck = this.getPlayerHand();
         CardDeck discardCardDeck;
         int deckNumber;
