@@ -8,6 +8,13 @@
             "type": "java",
             "name": "CodeLens (Launch) - CardGame",
             "request": "launch",
+            "mainClass": "main.CardGame",
+            "projectName": "Card-Game_94fbc84c"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CardGame",
+            "request": "launch",
             "mainClass": "CardGame",
             "projectName": "Card-Game_7c8569a3"
         },

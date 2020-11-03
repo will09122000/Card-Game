@@ -13,11 +13,10 @@ public class TestPlayer {
     private Player player;
     private CardDeck cardDeck;
     private ArrayList<CardDeck> decksArray;
-    private boolean stop;
 
 
     @Before
-    public final void setUp() {
+    public final void testPlayerIDSetUp() {
         cardDeck = new CardDeck();
         player = new Player(1, cardDeck, decksArray);
     }
@@ -27,6 +26,7 @@ public class TestPlayer {
         assertEquals("Player number must be 1", 1, player.getPlayerID());
     }
 
+    /*
     @Before
     public final void testStopGameSetUp() {
         stop = false;
@@ -37,4 +37,5 @@ public class TestPlayer {
     public final void testStopGame() {
         assertTrue("Stop should be true.", stop);
     }
+    */
 }

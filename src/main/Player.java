@@ -49,12 +49,10 @@ public class Player implements Runnable
     }
 
     // Method for checking if a player's hand is a winning hand.
-    private synchronized boolean isWinningHand() {
-        // Gets the int value of the first card in the particular player's hand.
-        int cardNumber = this.getPlayerHand().viewCard(0).getNumber();
+    private synchronized boolean isWinningHand(int firstCardNumber) {
         // A for loop that iterates through the cards in a player's hand and returns false if any of the cards are not the same as the first card in that player's hand.
         for (int i = 0; i < 4; i++) {
-            if (cardNumber != this.getPlayerHand().viewCard(i).getNumber()) {
+            if (firstCardNumber != this.getPlayerHand().viewCard(i).getNumber()) {
                 return false;
             }
         }
@@ -174,7 +172,7 @@ public class Player implements Runnable
         writeInitialHand();
         while(!stop) {
             //System.out.println("Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards());
-            if (isWinningHand()) {
+            if (isWinningHand(this.getPlayerHand().viewCard(0).getNumber())) {
                 winner.add(this.getPlayerID());
                 stopGame();
             } else {
