@@ -3,10 +3,19 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList; 
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
 
-public class CardGame {
-    static int numPlayers = 3;
-    static String packFileName = "three.txt";
+public class CardGame extends Player{
+    public CardGame(int playerID, CardDeck playerHand, ArrayList<CardDeck> decksArray) {
+        super(playerID, playerHand, decksArray);
+        // TODO Auto-generated constructor stub
+    }
+
+    static int numPlayers;
+    static String packFileName;
     static CardDeck entirePack = new CardDeck();
     static ArrayList<CardDeck> playersArray = new ArrayList<CardDeck>();
     static ArrayList<CardDeck> decksArray = new ArrayList<CardDeck>();
@@ -138,17 +147,28 @@ public class CardGame {
         }
     }
 
+    // Writes the last lines of each player's file when a player wins.
+    public static void writeEndDeck(int deckID) {
+        try {
+            FileWriter writeFile = new FileWriter("deck" + (deckID+1) + "_output.txt", true);
+            BufferedWriter buffer = new BufferedWriter(writeFile);
+            PrintWriter print = new PrintWriter(buffer);
+            print.println("deck" + (deckID+1) + " contents: " + decksArray.get(deckID).displayCards());
+            print.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws InterruptedException {
         deleteTextFiles();
         // Ask user for number of players playing and the pack text file that is
         // intended to be used.
-        //numPlayers = inputNumPlayers();
-        //packFileName = inputPackFileName();
+        numPlayers = inputNumPlayers();
+        packFileName = inputPackFileName();
 
         // Reads the card file again and loads it into a CardPile object.
         entirePack = fileToPile(packFileName);
-        System.out.println("Pack Loaded Successfully");
-
 
         // Distributes first half of the card pile to the players.
         playersArray = generateDecks(numPlayers, entirePack);
@@ -162,11 +182,19 @@ public class CardGame {
             Thread thread = new Thread(newPlayer, "player" + (i+1));
             thread.start();
             arrThreads.add(thread);
+            
         }
+        // For loop to hault running until all threads have finished.
         for (int i = 0; i < arrThreads.size(); i++) 
         {
             arrThreads.get(i).join(); 
         }
-        System.out.println("yeet");
+
+        // Writes the contents of each deck 
+        for (int i=0; i<decksArray.size(); i++) {
+            writeEndDeck(i);
+        }
+
+        System.out.println("Player " + winner.get(0) + " has won");
     }
 }

@@ -13,7 +13,7 @@ public class Player implements Runnable
     private static ArrayList<CardDeck> decksArray;
     private static boolean stop = false;
     // Winner is an array list in case multiple players win on the same round.
-    private static ArrayList<Integer> winner = new ArrayList<Integer>(5);
+    public static ArrayList<Integer> winner = new ArrayList<Integer>(5);
     private File outputFile;
 
     // Setters
@@ -44,11 +44,6 @@ public class Player implements Runnable
     // Method for changing the flag to tell all player threads to stop running.
     public static void stopGame() {
         stop = true;
-    }
-
-    // Method for checking that each thread can continue running each time a round has finished.
-    private synchronized boolean running() {
-        return Player.stop == false;
     }
 
     // Method for checking if a player's hand is a winning hand.
@@ -108,7 +103,7 @@ public class Player implements Runnable
             FileWriter writeFile = new FileWriter(outputFile.getName(), true);
             BufferedWriter buffer = new BufferedWriter(writeFile);
             PrintWriter print = new PrintWriter(buffer);
-            print.println("player " + this.getPlayerID() + " discards a " + oldCard.getNumber() + " from deck " + deckNumber);
+            print.println("player " + this.getPlayerID() + " discards a " + oldCard.getNumber() + " to deck " + deckNumber);
             print.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -174,14 +169,8 @@ public class Player implements Runnable
                 this.drawCard();
                 this.discardCard();
                 writeCurrentHand();
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
         }
         writeEndHand();
-        System.out.println("Player " + winner.get(0) + " has won");
     }
 }
