@@ -44,8 +44,30 @@ public class CardDeck {
         return sb;
     }
 
+    // Returns the number of cards in the card deck.
+    public int numberOfCards() {
+        return deck.size();
+    }
+
     // Constructor
     public CardDeck() {
         this.deck = new ArrayList<Card>();
+    }
+
+    public CardDeck(Card card1, Card card2, Card card3, Card card4) {
+        this.deck = new ArrayList<Card>();
+        deck.add(card1);
+        deck.add(card2);
+        deck.add(card3);
+        deck.add(card4);
+    }
+
+    public CardDeck(Card card1, Card card2, Card card3, Card card4, Card card5) {
+        this.deck = new ArrayList<Card>();
+        deck.add(card1);
+        deck.add(card2);
+        deck.add(card3);
+        deck.add(card4);
+        deck.add(card5);
     }
 }

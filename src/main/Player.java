@@ -61,7 +61,7 @@ public class Player implements Runnable
     }
 
     // Method for drawing a card from the top of the deck to the player's left.
-    private synchronized void drawCard() {
+    private synchronized void drawCard(File outputFile) {
         // The current deck is the player's hand.
         CardDeck currentDeck = this.getPlayerHand();
         // The player draws from the deck that has an id of 1 less than the players id (decks have ids starting from 0).
@@ -86,7 +86,7 @@ public class Player implements Runnable
     }
 
     // Method for discading a random card that is not of the player's preference to the bottom of the deck to the player's right.
-    private synchronized void discardCard() {
+    private synchronized void discardCard(File outputFile) {
         // The current deck is the player's hand.
         CardDeck currentDeck = this.getPlayerHand();
         CardDeck discardCardDeck;
@@ -176,8 +176,8 @@ public class Player implements Runnable
                 winner.add(this.getPlayerID());
                 stopGame();
             } else {
-                this.drawCard();
-                this.discardCard();
+                this.drawCard(outputFile);
+                this.discardCard(outputFile);
                 writeCurrentHand();
             }
         }
