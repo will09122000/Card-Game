@@ -70,4 +70,20 @@ public class CardDeck {
         deck.add(card4);
         deck.add(card5);
     }
+
+    public CardDeck(Card card1, Card card2, Card card3, Card card4, Card card5, Card card6, Card card7, Card card8, Card card9, Card card10, Card card11, Card card12) {
+        this.deck = new ArrayList<Card>();
+        deck.add(card1);
+        deck.add(card2);
+        deck.add(card3);
+        deck.add(card4);
+        deck.add(card5);
+        deck.add(card6);
+        deck.add(card7);
+        deck.add(card8);
+        deck.add(card9);
+        deck.add(card10);
+        deck.add(card11);
+        deck.add(card12);
+    }
 }
