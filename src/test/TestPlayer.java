@@ -1,20 +1,17 @@
 package test;
 
+import main.Player;
+import main.Card;
+import main.CardDeck;
+import org.junit.Before;
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import main.Card;
-import main.CardDeck;
-import main.Player;
 
 public class TestPlayer {
     private Player player1;

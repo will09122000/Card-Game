@@ -1,22 +1,16 @@
 package test;
 
-import org.junit.BeforeClass;
+import main.CardDeck;
+import main.CardGame;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.junit.After;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import jdk.jfr.Timestamp;
-import main.CardGame;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import static org.junit.Assert.*;
-
-import main.CardGame;
-import main.CardDeck;
-import main.Card;
-import main.Player;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class TestCardGame {
     private CardGame cardGame1;
@@ -25,42 +19,54 @@ public class TestCardGame {
     private String entirePackString;
     private String entirePackTest;
     
-    /*
+    InputStream oldSys = System.in;
     private int checkNumPlayers;
-    private String testPackFileName;
+    private String checkPackFileName;
     private String checkPackContent;
-    */
     
-    /*
     @Before
     public final void testInputNumPlayersSetUp() throws NoSuchMethodException, SecurityException, IllegalAccessException,
     IllegalArgumentException, InvocationTargetException {
-        Method inputNumPlayers = CardGame.class.getDeclaredMethod("inputNumPlayers", int.class);
+        ByteArrayInputStream input = new ByteArrayInputStream("3".getBytes());
+        System.setIn(input);
+        Method inputNumPlayers = CardGame.class.getDeclaredMethod("inputNumPlayers");
         inputNumPlayers.setAccessible(true);
-        checkNumPlayers = (int) inputNumPlayers.invoke(cardGame1, 5);
+        checkNumPlayers = (int) inputNumPlayers.invoke(cardGame1);
     }
 
     @Test
-    public void testInputNumPlayers () {
-        assertEquals("Must return true as 5 is a valid number of players.", 5, checkNumPlayers);
+    public void testInputNumPlayers() {
+        assertEquals("Must return 3 as 3 is a valid number of players.", 3, checkNumPlayers);
     }
 
+    @After
+    public void testInputNumPlayersTearDown() {
+        System.setIn(oldSys);
+    }
 
+    /*
     @Before
-    public final void testInputPackFileNameSetUp() {
-        testPackFileName = "test_text_pack.txt";
+    public final void testInputPackFileNameSetUp() throws NoSuchMethodException, SecurityException, IllegalAccessException,
+    IllegalArgumentException, InvocationTargetException {
+        ByteArrayInputStream input = new ByteArrayInputStream("three.txt".getBytes());
+        System.setIn(input);
         Method inputPackFileName = CardGame.class.getDeclaredMethod("inputPackFileName");
         inputPackFileName.setAccessible(true);
-        checkPackContent = (String) inputPackFileName.invoke(cardGame2);
+        checkPackFileName = (String) inputPackFileName.invoke(cardGame2);
     }
 
     @Test
-    public void testInputPackFileNamePlayers () {
-        //CardGame tester = new CardGame();
-        //assertEquals();
+    public void testInputPackFileName() {
+        assertEquals("Must return 'three.txt' as it is a known valid pack.", "three.txt", checkPackFileName);
+    }
+
+    @After
+    public void testInputPackFileNameTearDown() {
+        System.setIn(oldSys);
     }
     */
 
+    /*
     @Before
     public final void testFileToDeckSetUp() throws NoSuchMethodException, SecurityException, IllegalAccessException,
     IllegalArgumentException, InvocationTargetException {
@@ -77,7 +83,7 @@ public class TestCardGame {
     }
     
     
-    /*@Before
+    @Before
     public final void testGenerateDeckSetUp() throws NoSuchMethodException, SecurityException, IllegalAccessException,
     IllegalArgumentException, InvocationTargetException {
         Method FileToDeck = CardGame.class.getDeclaredMethod("fileToDeck", String.class);

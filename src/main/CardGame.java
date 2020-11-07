@@ -15,7 +15,7 @@ public class CardGame extends Player {
         super(playerID, playerHand, decksArray);
     }
 
-    static int numPlayers = 2;
+    static int numPlayers;
     static String packFileName;
     static CardDeck entirePack = new CardDeck();
     static ArrayList<CardDeck> playersArray = new ArrayList<CardDeck>();
@@ -23,7 +23,7 @@ public class CardGame extends Player {
     static ArrayList<Thread> arrThreads = new ArrayList<Thread>();
 
     // Method for retrieving the number of players in this game.
-    static int inputNumPlayers(int numPlayers) {
+    static int inputNumPlayers() {
         Scanner scan = new Scanner(System.in);
         // Keep asking for a number until the input is an integer greater than 1.
         do {
@@ -47,8 +47,8 @@ public class CardGame extends Player {
         do {
             isValidPack = true;
             System.out.print("Please enter the pack file name: ");
-            packFileName = scan.nextLine();
             try {
+                packFileName = scan.nextLine();
                 File currentDir = new File(".");
                 File parentDir = currentDir.getParentFile();
                 File packFile = new File(parentDir, packFileName);
@@ -189,7 +189,7 @@ public class CardGame extends Player {
     public static void main(String[] args) throws InterruptedException {
         deleteTextFiles();
         // Ask user for number of players playing and the pack text file that is intended to be used.
-        numPlayers = inputNumPlayers(numPlayers);
+        numPlayers = inputNumPlayers();
         packFileName = inputPackFileName();
 
         // Reads the card file again and loads it into a CardPile object.

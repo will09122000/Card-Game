@@ -3,12 +3,12 @@ package main;
 public class Card {
     private int number;
 
-    // Setters
+    // Setter
     public void setNumber(int number){
         this.number = number;
     }
 
-    // Getters
+    // Getter
     public int getNumber() {
         return number;
     }

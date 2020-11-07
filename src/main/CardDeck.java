@@ -49,7 +49,7 @@ public class CardDeck {
         return deck.size();
     }
 
-    // Constructor
+    // Constructors
     public CardDeck() {
         this.deck = new ArrayList<Card>();
     }
@@ -62,6 +62,7 @@ public class CardDeck {
         deck.add(card4);
     }
 
+    // Constructors used for testing
     public CardDeck(Card card1, Card card2, Card card3, Card card4, Card card5) {
         this.deck = new ArrayList<Card>();
         deck.add(card1);

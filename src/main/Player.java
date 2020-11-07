@@ -14,7 +14,7 @@ public class Player implements Runnable {
     private int playerID;
     private CardDeck playerHand;
     private static ArrayList<CardDeck> decksArray;
-    public static boolean stop = false;
+    volatile public static boolean stop = false;
     // Winner is an array list in case multiple players win on the same round.
     public static ArrayList<Integer> winner = new ArrayList<Integer>();
     private File outputFile;
@@ -187,11 +187,6 @@ public class Player implements Runnable {
     // The players that haven't won need undo their last go.
     private synchronized void undoLastRound() {
         if (!winner.contains(this.getPlayerID()) && decksArray.get(this.getPlayerID() - 1).numberOfCards() < 4) {
-            // Put the card they just drew from back.
-            CardDeck drawCardDeck = decksArray.get(this.getPlayerID() - 1);
-            drawCardDeck.addCard(drawnCard);
-            this.getPlayerHand().removeCard(drawnCard);
-
             // Get the card they just discarded back.
             CardDeck discardCardDeck;
             if (this.getPlayerID() == decksArray.size()) {
@@ -201,6 +196,11 @@ public class Player implements Runnable {
             }
             discardCardDeck.removeCard(discardedCard);
             this.getPlayerHand().addCard(discardedCard);
+            
+            // Put the card they just drew from back.
+            CardDeck drawCardDeck = decksArray.get(this.getPlayerID() - 1);
+            drawCardDeck.addCard(drawnCard);
+            this.getPlayerHand().removeCard(drawnCard);
 
             // Remove the last 3 lines of their output text file.
             ArrayList<String> fileLines = new ArrayList<String>();
