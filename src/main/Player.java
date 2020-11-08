@@ -67,7 +67,7 @@ public class Player implements Runnable {
     }
 
     // Method for drawing a card from the top of the deck to the player's left.
-    private synchronized Card drawCard(File outputFile) {
+    private synchronized Card drawCard() {
         outputFile = new File("player" + this.getPlayerID() + "_output.txt");
         // The current deck is the player's hand.
         CardDeck currentDeck = this.getPlayerHand();
@@ -98,7 +98,7 @@ public class Player implements Runnable {
 
     // Method for discading a random card that is not of the player's preference to
     // the bottom of the deck to the player's right.
-    private synchronized Card discardCard(File outputFile) {
+    private synchronized Card discardCard() {
         outputFile = new File("player" + this.getPlayerID() + "_output.txt");
         // The current deck is the player's hand.
         CardDeck currentDeck = this.getPlayerHand();
@@ -136,7 +136,7 @@ public class Player implements Runnable {
 
     // Creates the output text file for the player and writes the initial hand to
     // it.
-    private synchronized void writeInitialHand(File outputFile) {
+    private synchronized void writeInitialHand() {
         outputFile = new File("player" + this.getPlayerID() + "_output.txt");
         try {
             FileWriter writeFile = new FileWriter(outputFile.getName());
@@ -184,16 +184,18 @@ public class Player implements Runnable {
         }
     }
 
-    // The players that haven't won need undo their last go.
+    // The players that haven't won need undo their last go if they had already had their go before a player declared themselves the winner.
     private synchronized void undoLastRound() {
-        if (!winner.contains(this.getPlayerID()) && decksArray.get(this.getPlayerID() - 1).numberOfCards() < 4) {
+        CardDeck discardCardDeck;
+        if (this.getPlayerID() == decksArray.size()) {
+            discardCardDeck = decksArray.get(0);
+        } else {
+            discardCardDeck = decksArray.get(this.getPlayerID());
+        }
+        //System.out.println("Last: " + "Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards() + "Deck: " + decksArray.get(this.getPlayerID() - 1).displayCards());
+        if (decksArray.get(this.getPlayerID() - 1).numberOfCards() < 4) {
+            //System.out.println("Last: " + "Player" + this.getPlayerID());
             // Get the card they just discarded back.
-            CardDeck discardCardDeck;
-            if (this.getPlayerID() == decksArray.size()) {
-                discardCardDeck = decksArray.get(0);
-            } else {
-                discardCardDeck = decksArray.get(this.getPlayerID());
-            }
             discardCardDeck.removeCard(discardedCard);
             this.getPlayerHand().addCard(discardedCard);
             
@@ -225,11 +227,13 @@ public class Player implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if (decksArray.get(this.getPlayerID() - 1).numberOfCards() < 4)
+                undoLastRound();
         }
     }
 
     public void run() {
-        writeInitialHand(outputFile);
+        writeInitialHand();
         while (!stop) {
             //System.out.println("Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards());
             //System.out.println(decksArray.get(0).displayCards() + " " + decksArray.get(1).displayCards());
@@ -237,11 +241,12 @@ public class Player implements Runnable {
                 winner.add(this.getPlayerID());
                 stopGame();
             } else {
-                drawnCard = this.drawCard(outputFile);
-                discardedCard = this.discardCard(outputFile);
+                drawnCard = this.drawCard();
+                discardedCard = this.discardCard();
                 writeCurrentHand();
             }
         }
+        
         undoLastRound();
         writeEndHand();
     }

@@ -36,12 +36,12 @@ public class CardDeck {
     }
 
     // Used to display the cards that a player or deck has.
-    public StringBuffer displayCards() {
+    public String displayCards() {
         StringBuffer sb = new StringBuffer();
         for (Card card : deck) {
             sb.append(card.getNumber() + " ");
          }
-        return sb;
+        return sb.toString();
     }
 
     // Returns the number of cards in the card deck.

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+// Tests the Card class.
 public class TestCard {
     private Card card;
 

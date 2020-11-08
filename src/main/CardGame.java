@@ -20,10 +20,10 @@ public class CardGame extends Player {
     static CardDeck entirePack = new CardDeck();
     static ArrayList<CardDeck> playersArray = new ArrayList<CardDeck>();
     static ArrayList<CardDeck> decksArray = new ArrayList<CardDeck>();
-    static ArrayList<Thread> arrThreads = new ArrayList<Thread>();
+    static ArrayList<Thread> playerThreads = new ArrayList<Thread>();
 
     // Method for retrieving the number of players in this game.
-    static int inputNumPlayers() {
+    private static int inputNumPlayers() {
         Scanner scan = new Scanner(System.in);
         // Keep asking for a number until the input is an integer greater than 1.
         do {
@@ -40,7 +40,7 @@ public class CardGame extends Player {
     }
 
     // Method for retrieving the name of the pack text file and verifying it to be used in this game.
-    static String inputPackFileName() {
+    private static String inputPackFileName() {
         boolean isValidPack;
         Scanner scan = new Scanner(System.in);
         // Keep asking for the file name until the pack has been identifed as valid.
@@ -109,7 +109,7 @@ public class CardGame extends Player {
 
     // Method for creating an array of Card objects from all the cards in the text
     // file.
-    static CardDeck fileToDeck(String packFileName) {
+    private static CardDeck fileToDeck(String packFileName) {
         // Reads the parent directory and finds the deck file.
         File currentDir = new File(".");
         File parentDir = currentDir.getParentFile();
@@ -133,7 +133,7 @@ public class CardGame extends Player {
 
     // Method for distrbuting the each half of the cards to the players and the decks that players
     // draw from repectively.
-    public static ArrayList<CardDeck> generateDecks(int numPlayers, CardDeck entirePack) {
+    private static ArrayList<CardDeck> generateDecks(int numPlayers, CardDeck entirePack) {
         // Creates an ArrayList of decks
         ArrayList<CardDeck> newDecks = new ArrayList<CardDeck>();
         // cardDiff used to figure out which card to distrbute when doing round-robin.
@@ -159,7 +159,7 @@ public class CardGame extends Player {
     }
 
     // Method for deleting all the output text files that were generated in the last running of the program.
-    public static void deleteTextFiles() {
+    private static void deleteTextFiles() {
         // Retrieve the main source folder and create an array of all files within in. 
         File mainFolder = new File(System.getProperty("user.dir"));
         File files[] = mainFolder.listFiles();
@@ -173,7 +173,7 @@ public class CardGame extends Player {
     }
 
     // Writes the contents of each deck that doesn't have a player assigned to it to its own text file.
-    public static void writeEndDeck(int deckID) {
+    private static void writeEndDeck(int deckID, ArrayList<CardDeck> decksArray) {
         try {
             FileWriter writeFile = new FileWriter("deck" + (deckID+1) + "_output.txt", true);
             BufferedWriter buffer = new BufferedWriter(writeFile);
@@ -206,20 +206,21 @@ public class CardGame extends Player {
             Runnable newPlayer = new Player(i+1, playersArray.get(i), decksArray);
             Thread thread = new Thread(newPlayer, "player" + (i+1));
             thread.start();
-            arrThreads.add(thread);
+            playerThreads.add(thread);
             
         }
         // For loop to hault running until all threads have finished.
-        for (int i = 0; i < arrThreads.size(); i++) 
+        for (int i = 0; i < playerThreads.size(); i++) 
         {
-            arrThreads.get(i).join(); 
+            playerThreads.get(i).join(); 
         }
 
         // Writes the contents of each deck to its own text file.
         for (int i=0; i<decksArray.size(); i++) {
-            writeEndDeck(i);
+            writeEndDeck(i, decksArray);
         }
 
+        // Display the winning player to the terminal.
         System.out.println("Player " + winner.get(0) + " has won");
     }
 }
