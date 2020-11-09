@@ -232,7 +232,7 @@ public class Player implements Runnable {
         }
     }
 
-    public synchronized void run() {
+    public void run() {
         writeInitialHand();
         while (!stop) {
             System.out.println("Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards());
