@@ -62,7 +62,7 @@ public class Player implements Runnable {
             }
         }
         // It otherwise returns true as all cards in the hand are the same meaning that
-        // the player ahs won the game.
+        // the player has won the game.
         return true;
     }
 
@@ -192,9 +192,9 @@ public class Player implements Runnable {
         } else {
             discardCardDeck = decksArray.get(this.getPlayerID());
         }
-        //System.out.println("Last: " + "Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards() + "Deck: " + decksArray.get(this.getPlayerID() - 1).displayCards());
-        if (decksArray.get(this.getPlayerID() - 1).numberOfCards() < 4) {
-            //System.out.println("Last: " + "Player" + this.getPlayerID());
+        System.out.println("Last: " + "Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards() + "Deck: " + decksArray.get(this.getPlayerID() - 1).displayCards());
+        if (!winner.contains(this.getPlayerID()) && decksArray.get(this.getPlayerID() - 1).numberOfCards() < 4) {
+            System.out.println("Last: " + "Player" + this.getPlayerID());
             // Get the card they just discarded back.
             discardCardDeck.removeCard(discardedCard);
             this.getPlayerHand().addCard(discardedCard);
@@ -232,10 +232,10 @@ public class Player implements Runnable {
         }
     }
 
-    public void run() {
+    public synchronized void run() {
         writeInitialHand();
         while (!stop) {
-            //System.out.println("Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards());
+            System.out.println("Player" + this.getPlayerID() + " " + this.getPlayerHand().displayCards());
             //System.out.println(decksArray.get(0).displayCards() + " " + decksArray.get(1).displayCards());
             if (isWinningHand(this.getPlayerHand().viewCard(0).getNumber())) {
                 winner.add(this.getPlayerID());

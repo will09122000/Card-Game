@@ -15,8 +15,8 @@ public class CardGame extends Player {
         super(playerID, playerHand, decksArray);
     }
 
-    static int numPlayers;
-    static String packFileName;
+    static int numPlayers = 3;
+    static String packFileName = "three.txt";
     static CardDeck entirePack = new CardDeck();
     static ArrayList<CardDeck> playersArray = new ArrayList<CardDeck>();
     static ArrayList<CardDeck> decksArray = new ArrayList<CardDeck>();
@@ -189,8 +189,8 @@ public class CardGame extends Player {
     public static void main(String[] args) throws InterruptedException {
         deleteTextFiles();
         // Ask user for number of players playing and the pack text file that is intended to be used.
-        numPlayers = inputNumPlayers();
-        packFileName = inputPackFileName();
+        //numPlayers = inputNumPlayers();
+        //packFileName = inputPackFileName();
 
         // Reads the card file again and loads it into a CardPile object.
         entirePack = fileToDeck(packFileName);
